@@ -5,7 +5,7 @@ import { Message, MessageSystem } from './Message.jsx';
 class MessageList extends Component {
   render() {
     return (
-      <main class="messages">
+      <main className="messages">
         <Message />
         <MessageSystem />
       </main>
