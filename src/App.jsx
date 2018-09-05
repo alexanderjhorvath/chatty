@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
+const socket = new WebSocket("ws://localhost:3001");
+
 class App extends Component {
   constructor(props) {
     super();
@@ -28,6 +30,10 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+    socket.onopen = function (event) {
+      socket.send("Here is a test message!");
+      console.log("Message sent");
+    };
     setTimeout(() => {
       console.log("Simulating incoming message");
       const newMessage = {key: 3, username: "Michelle", content: "Hello There!"};
