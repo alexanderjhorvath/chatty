@@ -6,12 +6,14 @@ class ChatBar extends Component {
 
     this.state = {
       username: '',
-      content: ''
+      content: '',
+      type: ''
     }
 
     this.handleNewMessage = this.handleNewMessage.bind(this);
     this.handleChangeContent = this.handleChangeContent.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
+    this.updateChangeName = this.updateChangeName.bind(this);
 
   }
 
@@ -29,12 +31,24 @@ class ChatBar extends Component {
     })
   }
 
+  updateChangeName(event) {
+    if (event.key === 'Enter') {
+      console.log("Updating username to: " + event.target.value);
+      let newUserName = event.target.value;
+      console.log(newUserName);
+      this.props.changeName(newUserName);
+    }
+  }
+
   handleNewMessage(event) {
     if (event.key === 'Enter') {
       console.log("its a thing! " + this.state.content);
       this.props.addMessage({
         username: this.props.user.name,
         content: this.state.content
+      })
+      this.setState({
+        content: ''
       })
     }
   }
@@ -43,7 +57,7 @@ class ChatBar extends Component {
     const user = this.props.user.name;
     return (
         <footer className="chatbar">
-          <input className="chatbar-username" value={ this.props.user.name } onChange={ this.handleChangeName }/>
+          <input className="chatbar-username" defaultValue={ user } onKeyPress={ this.updateChangeName }/>
           <input
             type="text"
             className="chatbar-message"
