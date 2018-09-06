@@ -35,12 +35,12 @@ class App extends Component {
             ]
           })
           break;
-        case "incomingNotification":;
+        case "incomingNotification":
           this.setState({
-            notifications: {
+            notifications: [
               ...this.state.notifications,
               data
-            }
+            ]
           })
           break;
       }
@@ -48,11 +48,9 @@ class App extends Component {
   }
 
   changeName = (username) => {
-    console.log("Before: " + username);
     this.setState({
       currentUser: {name: username}
     });
-    setImmediate(() => console.log(this.state.currentUser));
   }
 
   addMessage(message) {
@@ -61,20 +59,16 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return <h1>Loading...</h1>
-    } else {
-      return (
-        <div>
-          <nav className="navbar">
-            <a href="/" className="navbar-brand">Chatty</a>
-          </nav>
-          <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
-          <ChatBar user={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName}/>
-        </div>
+    return (
+      <div>
+        <nav className="navbar">
+          <a href="/" className="navbar-brand">Chatty</a>
+        </nav>
+        <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
+        <ChatBar user={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName}/>
+      </div>
 
-      );
-    }
+    );
   }
 }
 export default App;

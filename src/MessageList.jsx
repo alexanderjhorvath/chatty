@@ -3,6 +3,7 @@ import { Message, MessageSystem } from './Message.jsx';
 // import MessageSystem from './Message.jsx';
 
 class MessageList extends Component {
+
   render() {
     const messages = this.props.messages.map(message => {
       return <Message
@@ -14,6 +15,7 @@ class MessageList extends Component {
 
     const notifications = this.props.notifications.map(notification => {
       return <MessageSystem
+        id={ notification.id }
         notification={ notification.content }
       />
     })
