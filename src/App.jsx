@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       "currentUser": {"name": "Bob"},
-      "messages": []
+      "messages": [],
+      "notifications": []
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -22,13 +23,27 @@ class App extends Component {
     console.log("componentDidMount <App />");
     socket.onmessage = (event) => {
       console.log(event);
-      let message = JSON.parse(event.data);
-      this.setState({
-        messages: [
-          ...this.state.messages,
-          message
-        ]
-      })
+      let data = JSON.parse(event.data);
+
+      // sorting incoming data between messages and notifications
+      switch(data.type) {
+        case "incomingMessage":
+          this.setState({
+            messages: [
+              ...this.state.messages,
+              data
+            ]
+          })
+          break;
+        case "incomingNotification":;
+          this.setState({
+            notifications: {
+              ...this.state.notifications,
+              data
+            }
+          })
+          break;
+      }
     }
   }
 
@@ -54,7 +69,7 @@ class App extends Component {
           <nav className="navbar">
             <a href="/" className="navbar-brand">Chatty</a>
           </nav>
-          <MessageList messages={this.state.messages}/>
+          <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
           <ChatBar user={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName}/>
         </div>
 

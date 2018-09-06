@@ -36,6 +36,10 @@ class ChatBar extends Component {
       console.log("Updating username to: " + event.target.value);
       let newUserName = event.target.value;
       console.log(newUserName);
+      this.props.addMessage({
+        content: `${this.props.user.name} changed their name to ${newUserName}`,
+        type: "postNotification"
+      })
       this.props.changeName(newUserName);
     }
   }
@@ -45,10 +49,12 @@ class ChatBar extends Component {
       console.log("its a thing! " + this.state.content);
       this.props.addMessage({
         username: this.props.user.name,
-        content: this.state.content
+        content: this.state.content,
+        type: "postMessage"
       })
       this.setState({
-        content: ''
+        content: '',
+        type: ''
       })
     }
   }

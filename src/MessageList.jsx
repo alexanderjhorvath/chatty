@@ -12,10 +12,16 @@ class MessageList extends Component {
       />
     });
 
+    const notifications = this.props.notifications.map(notification => {
+      return <MessageSystem
+        notification={ notification.content }
+      />
+    })
+
     return (
       <main className="messages">
         { messages }
-        <MessageSystem />
+        { notifications }
       </main>
     );
   }
