@@ -2,9 +2,6 @@ const express = require('express');
 const SocketServer = require('ws');
 const uuidv4 = require('uuid/v4');
 
-const id = uuidv4();
-console.log(id);
-
 //setting port to 3001
 const PORT = 3001;
 
@@ -20,6 +17,7 @@ const wss = new SocketServer.Server({ server });
 
 //callback that will run when a client connects
 wss.on('connection', (ws) => {
+  //tracking number of connected users upon connection
   clients.push(ws);
   let usersOnline = {
     amount: clients.length,
@@ -30,6 +28,7 @@ wss.on('connection', (ws) => {
       sock.send(JSON.stringify(usersOnline));
     }
   })
+
   ws.on('message', function incoming(event) {
     let message = JSON.parse(event);
 
@@ -52,6 +51,7 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', (close) => {
+    //tracking number of connected users upon disconnect
     clients.pop();
     let usersOnline = {
       amount: clients.length,

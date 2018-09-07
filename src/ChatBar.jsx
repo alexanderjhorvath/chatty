@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class ChatBar extends Component {
-  constructor(props) {
+  constructor() {
     super()
 
     this.state = {
@@ -33,12 +33,10 @@ class ChatBar extends Component {
 
   updateChangeName(event) {
     if (event.key === 'Enter') {
-      console.log("Updating username to: " + event.target.value);
       let newUserName = event.target.value;
-      console.log(newUserName);
       this.props.addMessage({
         content: `${this.props.user.name} changed their name to ${newUserName}`,
-        type: "postNotification"
+        type: 'postNotification'
       })
       this.props.changeName(newUserName);
     }
@@ -46,11 +44,10 @@ class ChatBar extends Component {
 
   handleNewMessage(event) {
     if (event.key === 'Enter') {
-      console.log("its a thing! " + this.state.content);
       this.props.addMessage({
         username: this.props.user.name,
         content: this.state.content,
-        type: "postMessage"
+        type: 'postMessage'
       })
       this.setState({
         content: '',
