@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
       "currentUser": {"name": "Bob"},
       "messages": [],
-      "notifications": []
+      "notifications": [],
+      "usersOnline": 0
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -37,32 +38,45 @@ class App extends Component {
           break;
         case "incomingNotification":
           this.setState({
-            notifications: [
-              ...this.state.notifications,
+            messages: [
+              ...this.state.messages,
               data
             ]
           })
           break;
+        case "incomingUserCount":
+         this.setState({
+           usersOnline: data.amount,
+         })
+         break;
       }
     }
   }
 
+  // updating username in state
   changeName = (username) => {
     this.setState({
       currentUser: {name: username}
     });
   }
 
+  // sending messages/notifications to the socket server
   addMessage(message) {
-    console.log("incoming! " + message.content);
       socket.send(JSON.stringify(message));
   }
 
   render() {
+    let userCounter;
+    if (this.state.usersOnline === 1) {
+      userCounter = `${this.state.usersOnline} chatter online`;
+    } else {
+      userCounter = `${this.state.usersOnline} chatters online`;
+    }
     return (
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
+          <span className="navbar-userCount">{ userCounter }</span>
         </nav>
         <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
         <ChatBar user={this.state.currentUser} addMessage={this.addMessage} changeName={this.changeName}/>

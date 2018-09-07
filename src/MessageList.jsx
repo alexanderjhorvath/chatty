@@ -5,25 +5,20 @@ import { Message, MessageSystem } from './Message.jsx';
 class MessageList extends Component {
 
   render() {
-    const messages = this.props.messages.map(message => {
+    let messages = {};
+
+    messages = this.props.messages.map(message => {
       return <Message
         id={ message.id }
         username={ message.username }
         content={ message.content }
+        type={ message.type }
       />
     });
-
-    const notifications = this.props.notifications.map(notification => {
-      return <MessageSystem
-        id={ notification.id }
-        notification={ notification.content }
-      />
-    })
 
     return (
       <main className="messages">
         { messages }
-        { notifications }
       </main>
     );
   }

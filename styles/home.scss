@@ -36,12 +36,12 @@ body {
    flex: 2;
  }
 
- .message {
+ .incomingMessage {
    display: flex;
    padding: 5px;
  }
 
- .message.system {
+ .incomingNotification {
    font-style: italic;
    padding: 5px 20px;
  }
@@ -83,4 +83,9 @@ body {
    line-height: 60px;
    padding: 0 10px;
    text-decoration: none;
+ }
+
+ .navbar-userCount {
+   float: right;
+   padding-top: 20px;
  }
